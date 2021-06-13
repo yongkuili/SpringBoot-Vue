@@ -2,6 +2,9 @@ package com.yan.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yan.pojo.Menu;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +14,12 @@ import com.yan.pojo.Menu;
  * @author LiYongkui
  * @since 2021-05-27
  */
+@Repository
 public interface MenuMapper extends BaseMapper<Menu> {
 
+    List<Menu> getMenusByAdminId(Integer adminId);
+
+    List<Menu> getMenusWithRole();
+
+    List<Menu> getAllMenus();
 }

@@ -17,4 +17,28 @@
         id, name, parentId, depPath, enabled, isParent
     </sql>
 
+
+    <!--添加部门-->
+    <select id="addDep" statementType="CALLABLE">
+        call addDep(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},#{enabled,mode=IN,jdbcType=BOOLEAN},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})
+    </select>
+
+
+    <!--删除部门-->
+    <select id="deleteDep" statementType="CALLABLE">
+        call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
+    </select>
+
+    <resultMap id="DepartmentWithChildren" type="com.yan.pojo.Department" extends="BaseResultMap">
+        <collection property="children" ofType="com.yan.pojo.Department"
+                    select = "com.yan.mapper.DepartmentMapper.getAllDepartmentsByParentId" column="id">
+        </collection>
+    </resultMap>
+    <!--查询所有部门-->
+    <select id="getAllDepartmentsByParentId" resultMap="DepartmentWithChildren">
+        select
+        <include refid="Base_Column_List" />
+        from t_department
+        where parentId = #{parentId}
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.yan.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yan.pojo.Oplog;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.yan.pojo.Oplog;
  * @author LiYongkui
  * @since 2021-05-27
  */
+@Repository
 public interface OplogMapper extends BaseMapper<Oplog> {
 
 }

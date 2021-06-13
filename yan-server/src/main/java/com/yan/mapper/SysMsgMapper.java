@@ -2,6 +2,7 @@ package com.yan.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yan.pojo.SysMsg;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.yan.pojo.SysMsg;
  * @author LiYongkui
  * @since 2021-05-27
  */
+@Repository
 public interface SysMsgMapper extends BaseMapper<SysMsg> {
 
 }

@@ -2,6 +2,7 @@ package com.yan.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yan.pojo.MenuRole;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,8 @@ import com.yan.pojo.MenuRole;
  * @author LiYongkui
  * @since 2021-05-27
  */
+@Repository
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
 
+    Integer insertRecord(Integer rid, Integer[] mids);
 }

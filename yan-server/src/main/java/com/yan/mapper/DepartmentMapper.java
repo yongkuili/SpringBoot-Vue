@@ -2,6 +2,9 @@ package com.yan.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yan.pojo.Department;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +14,12 @@ import com.yan.pojo.Department;
  * @author LiYongkui
  * @since 2021-05-27
  */
+@Repository
 public interface DepartmentMapper extends BaseMapper<Department> {
 
+    List<Department> getAllDepartmentsByParentId(int i);
+
+    void addDep(Department dep);
+
+    void deleteDep(Department department);
 }

@@ -1,4 +1,4 @@
-package com.yan.config;
+package com.yan.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,9 +37,9 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("云E办接口文档")
-                .description("云E办接口文档")
-                .contact(new Contact("LiYongkui","http:localhost:8085/doc.html","1263816107@qq.com"))
+                .title("后台接口文档")
+                .description("后台接口文档")
+                .contact(new Contact("LiYongkui","http:localhost:8081/doc.html","1263816107@qq.com"))
                 .version("1.0")
                 .build();
     }

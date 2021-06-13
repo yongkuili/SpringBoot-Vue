@@ -2,6 +2,9 @@ package com.yan.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yan.pojo.Role;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +14,8 @@ import com.yan.pojo.Role;
  * @author LiYongkui
  * @since 2021-05-27
  */
+@Repository
 public interface RoleMapper extends BaseMapper<Role> {
 
+    List<Role> getRolesByAdminId(Integer adminId);
 }
