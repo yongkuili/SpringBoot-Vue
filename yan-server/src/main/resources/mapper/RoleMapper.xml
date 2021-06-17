@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yan.mapper.RoleMapper">
+<mapper namespace="com.liyk.server.mapper.RoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.yan.pojo.Role">
+    <resultMap id="BaseResultMap" type="com.liyk.server.pojo.Role">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="nameZh" property="nameZh" />
@@ -14,7 +14,7 @@
         id, name, nameZh
     </sql>
 
-    <select id="getRolesByAdminId" resultType="com.yan.pojo.Role">
+    <select id="getRolesByAdminId" resultType="com.liyk.server.pojo.Role">
         select
             r.id,
             r.name,

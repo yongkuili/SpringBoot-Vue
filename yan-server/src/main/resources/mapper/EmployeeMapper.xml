@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yan.mapper.EmployeeMapper">
+<mapper namespace="com.liyk.server.mapper.EmployeeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.yan.pojo.Employee">
+    <resultMap id="BaseResultMap" type="com.liyk.server.pojo.Employee">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="gender" property="gender" />
@@ -41,24 +41,24 @@
     </sql>
 
 
-    <resultMap id="EmployeeInfo" type="com.yan.pojo.Employee" extends="BaseResultMap">
-        <association property="nation" javaType="com.yan.pojo.Nation">
+    <resultMap id="EmployeeInfo" type="com.liyk.server.pojo.Employee" extends="BaseResultMap">
+        <association property="nation" javaType="com.liyk.server.pojo.Nation">
             <id column="nid" property="id" />
             <result column="nname" property="name" />
         </association>
-        <association property="politicsStatus" javaType="com.yan.pojo.PoliticsStatus">
+        <association property="politicsStatus" javaType="com.liyk.server.pojo.PoliticsStatus">
             <id column="pid" property="id" />
             <result column="pname" property="name" />
         </association>
-        <association property="department" javaType="com.yan.pojo.Department">
+        <association property="department" javaType="com.liyk.server.pojo.Department">
             <id column="did" property="id" />
             <result column="dname" property="name" />
         </association>
-        <association property="joblevel" javaType="com.yan.pojo.Joblevel">
+        <association property="joblevel" javaType="com.liyk.server.pojo.Joblevel">
             <id column="jid" property="id" />
             <result column="jname" property="name" />
         </association>
-        <association property="position" javaType="com.yan.pojo.Position">
+        <association property="position" javaType="com.liyk.server.pojo.Position">
             <id column="posid" property="id" />
             <result column="posname" property="name" />
         </association>
