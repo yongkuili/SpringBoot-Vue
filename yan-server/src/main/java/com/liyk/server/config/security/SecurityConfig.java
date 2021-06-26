@@ -163,7 +163,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",        // 放行 swagger 资源
                 "/v2/api-docs/**",              // 放行 swagger 资源
                 "/captcha",      // 验证码接口
-                "/ws/**"
+                "/ws/**"// websocket
         );
     }
 }

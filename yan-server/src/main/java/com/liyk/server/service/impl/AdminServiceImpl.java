@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,11 +138,30 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     public RespBean updatePassword(String oldPass, String pass, Integer adminId) {
-        return null;
+        Admin admin = adminMapper.selectById(adminId);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (encoder.matches(oldPass,admin.getPassword())){
+            admin.setPassword(encoder.encode(pass));
+            int i = adminMapper.updateById(admin);
+            if (i == 1){
+                return RespBean.success("更新成功");
+            }
+        }
+        return RespBean.error("更新失败");
     }
 
     @Override
     public RespBean updateAdminUserFace(String url, Integer id, Authentication authentication) {
-        return null;
+        Admin admin = adminMapper.selectById(id);
+        admin.setUserFace(url);
+        int i = adminMapper.updateById(admin);
+        if (i == 1){
+            Admin principal = (Admin) authentication.getPrincipal();
+            principal.setUserFace(url);
+            //更新Authentication
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(admin,authentication.getCredentials(),authentication.getAuthorities()));
+            return RespBean.success("更新成功",url);
+        }
+        return RespBean.error("更新失败");
     }
 }

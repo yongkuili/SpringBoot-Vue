@@ -6,8 +6,10 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import com.liyk.server.mapper.MailLogMapper;
 import com.liyk.server.pojo.*;
 import com.liyk.server.service.*;
+import com.liyk.server.utils.MailConstants;
 import com.liyk.server.utils.RespBean;
 import com.liyk.server.utils.RespPageBean;
 import io.swagger.annotations.Api;
@@ -15,6 +17,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -67,12 +72,30 @@ public class EmployeeController {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
-
+    @Autowired
+    private MailLogMapper mailLogMapper;
     @ApiOperation(value = "更新员工")
     @PutMapping("/")
     public RespBean updateEmp(@RequestBody Employee employee){
         if (employeeService.updateById(employee)){
-            rabbitTemplate.convertAndSend("mail.welcome",employee);
+            //rabbitTemplate.convertAndSend("mail.welcome",employee);
+            Employee emp = employee;
+            //数据库记录发送的消息 邮件发送待完善
+
+            String msgId = UUID.randomUUID().toString();
+            MailLog mailLog = new MailLog();
+            mailLog.setMsgId(msgId);
+            mailLog.setEid(emp.getId());
+            mailLog.setStatus(0);
+            mailLog.setRouteKey(MailConstants.MAIL_ROUTING_KEY_NAME);
+            mailLog.setExchange(MailConstants.MAIL_EXCHANGE_NAME);
+            mailLog.setCount(0);
+            mailLog.setTryTime(LocalDateTime.now().plusMinutes(MailConstants.MSG_TIMEOUT));
+            mailLog.setCreateTime(LocalDateTime.now());
+            mailLog.setUpdateTime(LocalDateTime.now());
+            mailLogMapper.insert(mailLog);
+            //发送信息
+            rabbitTemplate.convertAndSend(MailConstants.MAIL_EXCHANGE_NAME,MailConstants.MAIL_ROUTING_KEY_NAME,emp,new CorrelationData(msgId));
             return RespBean.success("更新成功");
         }
         return RespBean.error("更新失败");

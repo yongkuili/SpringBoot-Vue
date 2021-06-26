@@ -16,7 +16,7 @@ public class RespBean {
 
     private long code;
     private String message;
-    private Object obj;
+    private Object data;
 
     /**
      * 成功返回结果 不带对象
